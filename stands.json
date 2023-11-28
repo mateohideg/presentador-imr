@@ -1,0 +1,152 @@
+[
+    {
+        "id": 0,
+        "title": "Artes Visuales/Teatro",
+        "locationId": 1,
+        "location": "MULTIESPACIO"
+    },
+    {
+        "id": 1,
+        "title": "Artes Visuales/Teatro",
+        "locationId": 2,
+        "location": "Aula de 3ro 3ra"
+    },
+    {
+        "id": 2,
+        "title": "Artes Visuales/Teatro",
+        "locationId": 3,
+        "location": "Aula de 3ro 2da"
+    },
+    {
+        "id": 3,
+        "title": "Aula Libre",
+        "locationId": 4,
+        "location": "Aula de 3ro 4ta"
+    },
+    {
+        "id": 4,
+        "title": "Inglés",
+        "locationId": 5,
+        "location": "Aula de 4to Economía 1ra"
+    },
+    {
+        "id": 5,
+        "title": "Inglés",
+        "locationId": 6,
+        "location": "Aula de 4to Economía 2da"
+    },
+    {
+        "id": 6,
+        "title": "Humanidades",
+        "locationId": 7,
+        "location": "Aula de 4to Humanidades"
+    },
+    {
+        "id": 7,
+        "title": "Economía",
+        "locationId": 8,
+        "location": "Aula de 6to Humanidades"
+    },
+    {
+        "id": 8,
+        "title": "Lengua y Literatura",
+        "locationId": 9,
+        "location": "Aula de 6to Economía"
+    },
+    {
+        "id": 9,
+        "title": "Lengua y Literatura",
+        "locationId": 10,
+        "location": "Aula de Dos Puertas"
+    },
+    {
+        "id": 10,
+        "title": "Ciencias Sociales y Humanidades",
+        "locationId": 11,
+        "location": "Círculo y Ventanal"
+    },
+    {
+        "id": 11,
+        "title": "Matemática",
+        "locationId": 12,
+        "location": "Aula de 3ro 1ra"
+    },
+    {
+        "id": 12,
+        "title": "Matemática",
+        "locationId": 13,
+        "location": "Aula de 2do 1ra"
+    },
+    {
+        "id": 13,
+        "title": "Ciencias Naturales",
+        "locationId": 14,
+        "location": "Aula de 2do 2da"
+    },
+    {
+        "id": 14,
+        "title": "Economía",
+        "locationId": 15,
+        "location": "Aula de 1ro 1ra"
+    },
+    {
+        "id": 15,
+        "title": "Ciencias Sociales y Humanidades",
+        "locationId": 16,
+        "location": "Aula de 1ro 2da"
+    },
+    {
+        "id": 16,
+        "title": "Estand de 6to Grado",
+        "locationId": 17,
+        "location": "Lateral izquierdo"
+    },
+    {
+        "id": 17,
+        "title": "Estand de 6to Grado",
+        "locationId": 18,
+        "location": "Lateral izquierdo"
+    },
+    {
+        "id": 18,
+        "title": "Estand de Economía",
+        "locationId": 19,
+        "location": "Lateral izquierdo"
+    },
+    {
+        "id": 19,
+        "title": "Estand de Matemática",
+        "locationId": 20,
+        "location": "Entre columnas"
+    },
+    {
+        "id": 20,
+        "title": "Escape Room de Biología",
+        "locationId": 21,
+        "location": "Aula de 1ro 3ra"
+    },
+    {
+        "id": 21,
+        "title": "Estand de Fisicoquímica",
+        "locationId": 22,
+        "location": "Lateral derecho"
+    },
+    {
+        "id": 22,
+        "title": "Estand de Biología",
+        "locationId": 23,
+        "location": "Lateral derecho"
+    },
+    {
+        "id": 23,
+        "title": "Estand de Tecnología",
+        "locationId": 24,
+        "location": "Lateral derecho"
+    },
+    {
+        "id": 24,
+        "title": "Estand de Educación Física",
+        "locationId": 25,
+        "location": "Lateral derecho"
+    }
+]

@@ -4,28 +4,28 @@
         "title": "Geometría en Movimiento (Apertura)",
         "time": 1701433800000,
         "locationId": 0,
-        "location": "Gimnasio (Escenario)"
+        "location": "Escenario"
     },
     {
         "id": 1,
         "title": "Sueño de una Noche de Verano (Acto)",
         "time": 1701434700000,
         "locationId": 1,
-        "location": "MULTI"
+        "location": "MULTIESPACIO"
     },
     {
         "id": 2,
         "title": "Redes Sociales y Ansiedad en Jovenes (Charla)",
         "time": 1701435600000,
         "locationId": 7,
-        "location": "Aula (4to Humanidades)"
+        "location": "Aula de 4to Humanidades"
     },
     {
         "id": 3,
         "title": "Hamlet (Acto)",
         "time": 1701436500000,
         "locationId": 1,
-        "location": "MULTI"
+        "location": "MULTIESPACIO"
     },
     {
         "id": 4,
@@ -39,21 +39,21 @@
         "title": "Nada es lo que Parece (Acto)",
         "time": 1701438300000,
         "locationId": 1,
-        "location": "MULTI"
+        "location": "MULTIESPACIO"
     },
     {
         "id": 6,
         "title": "Frustración Deportiva en los Jovenes (Charla)",
         "time": 1701439200000,
         "locationId": 7,
-        "location": "Aula (4to Humanidades)"
+        "location": "Aula de 4to Humanidades"
     },
     {
         "id": 7,
         "title": "Cuando Romeo se Transó a Julieta (Acto)",
         "time": 1701440100000,
         "locationId": 1,
-        "location": "MULTI"
+        "location": "MULTIESPACIO"
     },
     {
         "id": 8,

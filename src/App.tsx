@@ -1,11 +1,13 @@
 import type { Accessor, Component, Setter } from 'solid-js';
-import { createSignal } from "solid-js";
+import { createEffect, createSignal, onMount } from "solid-js";
+import { Floor, drawFloors, locationIds } from './floors';
 
 import useTheme from "@suid/material/styles/useTheme";
 import ArrowBackIcon from "@suid/icons-material/ArrowBack";
-import { Alert, AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, Toolbar, Typography } from "@suid/material";
+import { Alert, AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, MenuItem, Select, Stack, Toolbar, Typography } from "@suid/material";
 
 import allEvents from '../events.json'
+import stands from '../stands.json';
 
 interface EventsProps {
   setSelectedEventId: Setter<number>;
@@ -34,18 +36,18 @@ const App: Component = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Eventos
           </Typography>
-          <Button color="inherit" onClick={() => setOpenPlane(true)}>Estands</Button>
+          <Button color="inherit" onClick={() => setOpenPlane(true)}>Materias</Button>
         </Toolbar>
       </AppBar> : <AppBar position="static">
         <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="back" sx={{ mr: 2 }} onClick={() => {
+          <IconButton size="large" edge="start" color="inherit" sx={{ mr: 2 }} onClick={() => {
             setOpenPlane(false);
             setSelectedEventId(-1);
           }}>
             <ArrowBackIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Plano {selectedEventId() > -1 ? '| ' + allEvents.find(x => x.id === selectedEventId())?.title : '| Estands'}
+            Plano {selectedEventId() > -1 ? '| ' + allEvents.find(x => x.id === selectedEventId())?.title : '| Materias'}
           </Typography>
         </Toolbar>
       </AppBar>}
@@ -85,9 +87,58 @@ const Events: Component<EventsProps> = (props: EventsProps) => {
 }
 
 const Plane: Component<PlaneProps> = (props: PlaneProps) => {
-  return (<>
-    <Alert severity="info">WIP</Alert>
-  </>);
+
+  const [selectedFloorSign, setSelectedFloorSign] = createSignal(-1);
+  const [selectedFloorStand, setSelectedFloorStand] = createSignal(-1);
+
+  let theCanvas: HTMLCanvasElement | ((el: HTMLCanvasElement) => void) | undefined;
+
+  onMount(() => {
+    if (theCanvas instanceof HTMLCanvasElement) {
+      const ctx = theCanvas.getContext('2d');
+      if (ctx) {
+        let selectedFloor = -1;
+
+        if (props.selectedEventId() > -1) {
+          selectedFloor = Object.values(locationIds).findIndex(x => x.includes(allEvents.find(x => x.id === props.selectedEventId())?.locationId.toString() ?? "-1")) - 1;
+          selectedFloor = selectedFloor < -1 ? -1 : selectedFloor;
+        }
+
+        setSelectedFloorSign(selectedFloor);
+
+        drawFloors(ctx, selectedFloor, allEvents.find(x => x.id === props.selectedEventId())?.locationId);
+      }
+    }
+  });
+
+  createEffect(() => {
+    if (theCanvas instanceof HTMLCanvasElement) {
+      const ctx = theCanvas.getContext('2d');
+      if (ctx) {
+        if (props.selectedEventId() < 0) {
+          ctx.clearRect(0, 0, theCanvas.width, theCanvas.height);
+          drawFloors(ctx, selectedFloorStand());
+        }
+      }
+    }
+  });
+
+  return (<div>
+    <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} sx={{ height: 'calc(100vh - 64px - 40px)', padding: '20px' }}>
+      <canvas ref={theCanvas} width={450} height={600}></canvas>
+      {props.selectedEventId() > -1 ? <div>
+        <Typography variant="h4" gutterBottom component="div">{(selectedFloorSign() === -1) ? "Gimnasio" : (selectedFloorSign() === 0) ? "Planta Baja" : (selectedFloorSign() === 1) ? "Primer Piso" : "Desconocido"}</Typography>
+        <Typography variant="subtitle1" gutterBottom component="div">El evento seleccionado se encuentra en "<b>{allEvents.find(x => x.id === props.selectedEventId())?.location}</b>"{(allEvents.find(x => x.id === props.selectedEventId())?.locationId ?? -1) > -1 ? ", este se encuentra marcado de azul" : ''}.</Typography>
+      </div> : <div>
+        <Select value={selectedFloorStand()} onChange={event => setSelectedFloorStand(event.target.value)} sx={{ mb: 2 }}>
+          <MenuItem value={-1}>Gimnasio</MenuItem>
+          <MenuItem value={0}>Planta Baja</MenuItem>
+          <MenuItem value={1}>Primer Piso</MenuItem>
+        </Select>
+        <Typography variant="body1" gutterBottom>{stands.filter(stand => Object.values(locationIds)[selectedFloorStand() + 1].includes(stand.locationId.toString())).map(stand => <p><b>{stand.locationId}.</b> {stand.title}</p>)}</Typography>
+      </div>}
+    </Stack>
+  </div>);
 }
 
 export default App;
