@@ -57,13 +57,13 @@
         "id": 9,
         "title": "Lengua y Literatura",
         "locationId": 10,
-        "location": "Aula de Dos Puertas"
+        "location": "Aula de dos puertas"
     },
     {
         "id": 10,
         "title": "Ciencias Sociales y Humanidades",
         "locationId": 11,
-        "location": "Círculo y Ventanal"
+        "location": "Círculo y ventanal"
     },
     {
         "id": 11,

@@ -4,5 +4,6 @@
 }
 
 canvas {
-  max-height: 100vh;
+  max-height: calc(100vh - 64px - 40px);
+  aspect-ratio: 450 / 600;
 }

@@ -1,10 +1,10 @@
 import type { Accessor, Component, Setter } from 'solid-js';
-import { createEffect, createSignal, onMount } from "solid-js";
-import { Floor, drawFloors, locationIds } from './floors';
+import { createEffect, createSignal, onMount } from 'solid-js';
+import { drawFloors, locationIds } from './floors';
 
-import useTheme from "@suid/material/styles/useTheme";
-import ArrowBackIcon from "@suid/icons-material/ArrowBack";
-import { Alert, AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, MenuItem, Select, Stack, Toolbar, Typography } from "@suid/material";
+import useTheme from '@suid/material/styles/useTheme';
+import ArrowBackIcon from '@suid/icons-material/ArrowBack';
+import { Alert, AppBar, Box, Button, Divider, IconButton, List, ListItem, ListItemButton, ListItemText, MenuItem, Select, Stack, Toolbar, Typography, useMediaQuery } from '@suid/material';
 
 import allEvents from '../events.json'
 import stands from '../stands.json';
@@ -61,7 +61,7 @@ const Events: Component<EventsProps> = (props: EventsProps) => {
   const startedEvents = allEvents.filter(x => Date.now() >= x.time).sort((a, b) => b.time - a.time);
 
   return (<>
-    <Alert severity="info">Puedes presionar los eventos para abrirlos en un plano.</Alert>
+    <Alert severity="info">Puedes presionar los eventos para abrirlos en el plano, o seleccionar 'Materias' para ver los estands correspondientes a cada una.</Alert>
     <nav>
       <List>
         {notStartedEvents.map(event => <ListItem disablePadding>
@@ -93,6 +93,9 @@ const Plane: Component<PlaneProps> = (props: PlaneProps) => {
 
   let theCanvas: HTMLCanvasElement | ((el: HTMLCanvasElement) => void) | undefined;
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
   onMount(() => {
     if (theCanvas instanceof HTMLCanvasElement) {
       const ctx = theCanvas.getContext('2d');
@@ -100,7 +103,7 @@ const Plane: Component<PlaneProps> = (props: PlaneProps) => {
         let selectedFloor = -1;
 
         if (props.selectedEventId() > -1) {
-          selectedFloor = Object.values(locationIds).findIndex(x => x.includes(allEvents.find(x => x.id === props.selectedEventId())?.locationId.toString() ?? "-1")) - 1;
+          selectedFloor = Object.values(locationIds).findIndex(x => x.includes(allEvents.find(x => x.id === props.selectedEventId())?.locationId.toString() ?? '-1')) - 1;
           selectedFloor = selectedFloor < -1 ? -1 : selectedFloor;
         }
 
@@ -124,18 +127,18 @@ const Plane: Component<PlaneProps> = (props: PlaneProps) => {
   });
 
   return (<div>
-    <Stack direction="row" divider={<Divider orientation="vertical" flexItem />} spacing={2} sx={{ height: 'calc(100vh - 64px - 40px)', padding: '20px' }}>
+    <Stack direction={!matches() ? 'column' : 'row'} divider={<Divider orientation={!matches() ? 'horizontal' : 'vertical'} flexItem />} spacing={2} sx={{ height: 'calc(100vh - 64px - 40px)', padding: '20px' }}>
       <canvas ref={theCanvas} width={450} height={600}></canvas>
       {props.selectedEventId() > -1 ? <div>
-        <Typography variant="h4" gutterBottom component="div">{(selectedFloorSign() === -1) ? "Gimnasio" : (selectedFloorSign() === 0) ? "Planta Baja" : (selectedFloorSign() === 1) ? "Primer Piso" : "Desconocido"}</Typography>
-        <Typography variant="subtitle1" gutterBottom component="div">El evento seleccionado se encuentra en "<b>{allEvents.find(x => x.id === props.selectedEventId())?.location}</b>"{(allEvents.find(x => x.id === props.selectedEventId())?.locationId ?? -1) > -1 ? ", este se encuentra marcado de azul" : ''}.</Typography>
+        <Typography variant="h4" gutterBottom component="div">{(selectedFloorSign() === -1) ? 'Gimnasio' : (selectedFloorSign() === 0) ? 'Planta Baja' : (selectedFloorSign() === 1) ? 'Primer Piso' : 'Desconocido'}</Typography>
+        <Typography variant="subtitle1" gutterBottom component="div">El evento seleccionado tiene lugar en '<b>{allEvents.find(x => x.id === props.selectedEventId())?.location}</b>'{(allEvents.find(x => x.id === props.selectedEventId())?.locationId ?? -1) > -1 ? ', que se encuentra marcada en amarillo' : ''}.</Typography>
       </div> : <div>
         <Select value={selectedFloorStand()} onChange={event => setSelectedFloorStand(event.target.value)} sx={{ mb: 2 }}>
           <MenuItem value={-1}>Gimnasio</MenuItem>
           <MenuItem value={0}>Planta Baja</MenuItem>
           <MenuItem value={1}>Primer Piso</MenuItem>
         </Select>
-        <Typography variant="body1" gutterBottom>{stands.filter(stand => Object.values(locationIds)[selectedFloorStand() + 1].includes(stand.locationId.toString())).map(stand => <p><b>{stand.locationId}.</b> {stand.title}</p>)}</Typography>
+        <Typography variant="body1" gutterBottom>{stands.filter(stand => Object.values(locationIds)[selectedFloorStand() + 1].includes(stand.locationId.toString())).map(stand => <p><b>{stand.locationId} ({stand.location}).</b> {stand.title}</p>)}</Typography>
       </div>}
     </Stack>
   </div>);
